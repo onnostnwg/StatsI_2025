@@ -1,0 +1,47 @@
+---
+title: "Neu"
+author: "Onno"
+date: "2025-09-23"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Load Data
+```{r}
+df <- read.csv("C:/Users/onnos/Documents/GitHub/StatsI_2025/datasets/fictional_data.csv")
+View(df)
+```
+
+#Distributions
+```{r}
+hist(df$income)
+mean(df$income)
+var(df$income)
+sd(df$income)
+
+hist(df$edu)
+mean(df$edu)
+var(df$edu)
+sd(df$edu)
+```
+
+#Confidence Intervals
+```{r}
+upper_95 <- (mean(df$income)+(1.95)*sd(df$income)/sqrt(length(df$income)))
+upper_95
+
+
+
+
+```
+
+
+
+
+
+
+
+
