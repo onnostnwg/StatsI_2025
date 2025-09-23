@@ -1,0 +1,50 @@
+---
+title: "01_tutorial_RS"
+author: "Dr Redmond Scales"
+date: "2025-09-19"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+Give a brief introduction of the research question(s), and how you will answer them.
+
+RQ: Is there a relationship between education and income?
+
+## Data
+
+Import the data and describe it. Include below a brief written interpretation. 
+
+```{r}
+
+```
+
+## Analysis
+
+Describe how you analysed the data. You can embed R outputs directly in your text, for example, the mean of university level education is `r round(mean(df$edu),2)` years. 
+
+Present a relevant visualization for the distribution of income. 
+
+```{r}
+
+```
+
+Include some analysis of how confident we can be about our estimate for the population mean.
+
+```{r}
+
+```
+
+Is there a relationship between education and income?
+
+```{r}
+
+```
+
+## Conclusion
+
+What is your main finding? What weaknesses might there be in your research? What further analyses are needed?
