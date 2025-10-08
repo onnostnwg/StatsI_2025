@@ -1,0 +1,200 @@
+---
+title: "ProblemSet 1"
+author: "Onno"
+date: "2025-10-02"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Part 1: Preparations
+```{r}
+## Clear working environment
+rm(list=ls())
+
+## Set working directory
+setwd("C:/Users/onnos/Documents/GitHub/StatsI_2025/problemSets/PS01")
+```
+
+
+#Task 1; part 1
+```{r}
+## Load data; I used iq instead of y; it'S easier to operate with
+iq <- c (105 , 69 , 86 , 100 , 82 , 111 , 104 , 110 , 87 , 108 , 87 , 90 , 94 , 113 , 112 , 98 ,
+        80 , 97 , 95 , 111 , 114 , 89 , 95 , 126 , 98)
+
+## Construct length indicator
+n <- length(iq)
+
+# Sample mean; (there are no NAs, so no na.rm = T necessary for all analyses)
+sample_mean <- mean(iq)
+
+## Sample standard deviation
+sample_sd <- sd(iq)
+
+## t critical value for 90% confidence interval; use t because n<=30
+t90 <- qt((1 + 0.90)/2, df = n - 1)
+
+## Lower and upper bounds
+lower_90 <- sample_mean - (t90 * (sample_sd / sqrt(n)))
+upper_90 <- sample_mean + (t90 * (sample_sd / sqrt(n)))
+
+## Combine into a confidence interval
+confint90 <- c(lower_90, upper_90)
+
+# result
+confint90 
+## the 90% CI is 93.96 and 102.92
+
+```
+
+
+# TASK 1; part 2
+```{r}
+## two important infos: 
+#the average student IQ in her school is "higher" than the average IQ score (100) - use one-sided t-test
+# alpha = 0.05
+
+# construct value for real IQ mean
+mu0 <- 100
+
+## find our sample standard deviation
+sd <- sd(iq)
+  
+## and now calculate the standard error
+se <- sd/sqrt(n)
+  
+## adjust the degrees of freedom
+df <- n-1
+  
+## set t-statistic
+t <- (sample_mean-mu0)/se
+  
+## One-sided p-value (test if mean > mu0) -> remember we want to know if HIGHER than 100
+p_value <- 1-pt(t, df)
+  
+## Integrate results
+dat <- c(Mean = sample_mean, StdError = se, t = t, df = df, p_value = p_value)
+  
+## See our results!!
+dat
+
+## Time for interpretation: 
+# The mean in the sample is lower than 100; we do not find enough evidence to reject the 0 hypothesis. Because: p = 0.72 > 0.05
+
+```
+
+
+### TASK 2; part 1
+```{r}
+
+## Import our data set; could be done with setwd as well, but only one line like this
+expenditures <- read.table("C:/Users/onnos/Documents/GitHub/StatsI_2025/datasets/expenditure.txt", header = TRUE, sep = "\t")
+
+## create a subset!!
+vars <- expenditures[, c("Y", "X1", "X2", "X3")]
+
+## and a correlation matrix
+cor_matrix <- cor(vars)
+
+## Let's see the correlation matrix
+round(cor_matrix, 2)
+
+### INTERPRETATION 
+# X1 and Y: Moderate positive correlation (0.53): states with higher per capita income tend to spend more on homelessness
+# X2 and Y: Moderate positive correlation (0.45): states with more financially insecure residents tend to spend more
+# X3 and Y: Moderate positive correlation (0.46): states with more urban residents spend more
+
+# Furthemrore, there seems to be a connection between X1 and x3!!; attention - danger of collinearity
+# There is a moderate positive correlation (0.60) between X1 and X3: richer states tend to be more urban!
+#Other predictors not too strongly correlating
+
+```
+
+
+## TASK 2; part 2
+```{r}
+## compare regions regarding their expenditure
+
+## first of all, make labels clear! way easier to interpret
+expenditures$Region <- factor(expenditures$Region, 
+                              levels = c(1,2,3,4),
+                              labels = c("Northeast", "North Central", "South", "West"))
+
+# now lets create a boxplot of Y by region
+boxplot(Y ~ Region, data = expenditures,
+        main = "Per Capita Expenditure on Housing Assistance by Region",
+        xlab = "Region",
+        ylab = "Per Capita Expenditure",
+        col = c("lightblue","lightgreen","lightpink","lightyellow"))
+
+## lookin pretty
+
+## INTERPRETATION: on average, states in the West spend the most on housing assistance
+
+```
+
+## TASK 2; part 3
+```{r}
+## first: plot!
+
+plot(expenditures$X1, expenditures$Y)
+
+#okay, nice already, but lets make it fancy
+
+plot(expenditures$X1, expenditures$Y,
+     main = "Per Capita Expenditure vs Per Capita Income",
+     xlab = "Per Capita Income (X1)",
+     ylab = "Per Capita Expenditure (Y)",
+     pch = 19, col = "blue")
+
+# and adding a regression line
+abline(lm(Y ~ X1, data = expenditures), col = "red", lwd = 2)
+
+#beautiful
+
+
+### Now the different colours and symbols!
+
+# assigning colors and symbols by Region
+region_colors <- c("Northeast" = "red", 
+                   "North Central" = "blue", 
+                   "South" = "green", 
+                   "West" = "purple")
+
+region_symbols <- c("Northeast" = 17,  # triangle
+                    "North Central" = 19,  # circle
+                    "South" = 15,  # square
+                    "West" = 18)   # diamond
+
+# plotting with colors and symbols
+plot(expenditures$X1, expenditures$Y,
+     main = "Per Capita Expenditure vs Per Capita Income by Region",
+     xlab = "Per Capita Income (X1)",
+     ylab = "Per Capita Expenditure (Y)",
+     col = region_colors[expenditures$Region],
+     pch = region_symbols[expenditures$Region])
+
+# And we can even add legend to be able to interpret easier:
+legend("topleft", legend = levels(expenditures$Region),
+       col = region_colors, pch = region_symbols, title = "Region")
+
+#nice
+
+```
+
+
+```{r}
+
+rmarkdown::render("Problemset 1 Steenweg.Rmd")
+
+```
+
+
+
