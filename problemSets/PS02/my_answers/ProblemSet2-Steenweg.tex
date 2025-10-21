@@ -1,0 +1,323 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={ProblemSet2},
+  pdfauthor={Onno},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{ProblemSet2}
+\author{Onno}
+\date{2025-10-14}
+
+\begin{document}
+\maketitle
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\#\# Standard Procedure \& Preparation}
+\DocumentationTok{\#\# Clear working environment}
+\FunctionTok{rm}\NormalTok{(}\AttributeTok{list=}\FunctionTok{ls}\NormalTok{())}
+
+\DocumentationTok{\#\# Set working directory}
+\FunctionTok{setwd}\NormalTok{(}\StringTok{"C:/Users/onnos/Desktop/TRINITY/PhD/RStudio"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Question 1}\label{question-1}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# Import our data into R, so create a matrix! we\textquotesingle{}ll call it obs for observations}
+\NormalTok{obs }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{14}\NormalTok{, }\DecValTok{7}\NormalTok{,   }\CommentTok{\# Not Stopped}
+                \DecValTok{6}\NormalTok{, }\DecValTok{7}\NormalTok{,    }\CommentTok{\# Bribe requested}
+                \DecValTok{7}\NormalTok{, }\DecValTok{1}\NormalTok{),   }\CommentTok{\# Stopped/given warning}
+              \AttributeTok{nrow =} \DecValTok{2}\NormalTok{,}
+              \AttributeTok{byrow =} \ConstantTok{FALSE}\NormalTok{)}
+
+\DocumentationTok{\#\# make our table a bit more beautiful and easier to handle }
+\FunctionTok{rownames}\NormalTok{(obs) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Upper Class"}\NormalTok{, }\StringTok{"Lower Class"}\NormalTok{)}
+\FunctionTok{colnames}\NormalTok{(obs) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"NotStopped"}\NormalTok{, }\StringTok{"Bribe"}\NormalTok{, }\StringTok{"Stopped"}\NormalTok{)}
+\NormalTok{obs}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             NotStopped Bribe Stopped
+## Upper Class         14     6       7
+## Lower Class          7     7       1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# SUBTASK 1 }
+
+\DocumentationTok{\#\# calculate row and column means for chi square calcs}
+\NormalTok{row\_totals }\OtherTok{\textless{}{-}} \FunctionTok{rowSums}\NormalTok{(obs) }\DocumentationTok{\#\#27 and 15!}
+\NormalTok{col\_totals }\OtherTok{\textless{}{-}} \FunctionTok{colSums}\NormalTok{(obs) }\DocumentationTok{\#\#21, 13 and 8}
+\NormalTok{grand\_total }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(obs) }\DocumentationTok{\#\#42}
+
+\DocumentationTok{\#\# now we can calculate our expected number of observations that we need for chi\^{}2}
+\NormalTok{expected }\OtherTok{\textless{}{-}} \FunctionTok{outer}\NormalTok{(row\_totals, col\_totals) }\SpecialCharTok{/}\NormalTok{ grand\_total}
+\DocumentationTok{\#\# lets have a look}
+\NormalTok{expected}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             NotStopped    Bribe  Stopped
+## Upper Class       13.5 8.357143 5.142857
+## Lower Class        7.5 4.642857 2.857143
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# calculate chi\^{}2 by estimating components and summing them}
+\NormalTok{chi\_sq }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{((obs }\SpecialCharTok{{-}}\NormalTok{ expected)}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{/}\NormalTok{ expected)}
+\NormalTok{chi\_sq}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3.791168
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# our chi\^{}2 is 3.799!!}
+
+
+\DocumentationTok{\#\#\# SUBTASK 2}
+
+\DocumentationTok{\#\# First of all, let\textquotesingle{}s calculate the degrees of freedom that we have }
+
+\DocumentationTok{\#\#\#\# df=(r−1)(c−1)}
+\NormalTok{df }\OtherTok{\textless{}{-}}\NormalTok{ (}\DecValTok{2{-}1}\NormalTok{)}\SpecialCharTok{*}\NormalTok{(}\DecValTok{3{-}1}\NormalTok{)}
+\DocumentationTok{\#\# df = 2}
+
+\CommentTok{\# p{-}value}
+\NormalTok{p\_value }\OtherTok{\textless{}{-}} \FunctionTok{pchisq}\NormalTok{(chi\_sq, df, }\AttributeTok{lower.tail =}\NormalTok{ F)}
+\NormalTok{p\_value }\CommentTok{\#0.15}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.1502306
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# {-}\textgreater{} we cannot reject the H0; p = 0.15, \textgreater{}.05}
+\DocumentationTok{\#\# because 0.15 \textgreater{} .10 we even reject at 10\% level}
+
+
+\DocumentationTok{\#\#\# SUBTASK 3}
+\NormalTok{std\_resid }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{((obs }\SpecialCharTok{{-}}\NormalTok{ expected) }\SpecialCharTok{/} \FunctionTok{sqrt}\NormalTok{(expected))}
+\FunctionTok{View}\NormalTok{(std\_resid)}
+
+
+\DocumentationTok{\#\#\# SUBTASK 4}
+\CommentTok{\# they are a cell{-}level view of chi\^{}2 results, so we can see exactly}
+\CommentTok{\# which cells have exceedingly higher or lower observed than expected outcomes!}
+\CommentTok{\# This gives us a finer grained view of patterns behind the single}
+\CommentTok{\# test statistic (chi\^{}2)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Question 2}\label{question-2}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# Load the data into R}
+
+\NormalTok{url }\OtherTok{\textless{}{-}} \StringTok{"https://raw.githubusercontent.com/kosukeimai/qss/master/PREDICTION/women.csv"}
+\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(url, }\AttributeTok{header =} \ConstantTok{TRUE}\NormalTok{)}
+
+\DocumentationTok{\#\# SUBTASK 1}
+
+\CommentTok{\# H0: There is no difference in the number of new (or repaired) water sources}
+\CommentTok{\# between villages that are lead by men and villages that are lead by women}
+
+\CommentTok{\# H1: The number of new (or repaired) water sources in villages that are lead}
+\CommentTok{\# lead by men is higher (or lower!) than in villages that are lead by women}
+
+
+\DocumentationTok{\#\# SUBTASK 2}
+
+\DocumentationTok{\#\# lets do the regression, first fit the model.. we take $female not $reserved, }
+\DocumentationTok{\#\# because we want to know ALL women}
+\NormalTok{regression }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(water }\SpecialCharTok{\textasciitilde{}}\NormalTok{ female, }\AttributeTok{data =}\NormalTok{ df)}
+
+
+\DocumentationTok{\#\# SUBTASK 3 }
+\CommentTok{\# lets see it}
+\FunctionTok{summary}\NormalTok{(regression)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = water ~ female, data = df)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -22.68 -14.78  -7.81   2.29 317.32 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)   14.813      2.382   6.220 1.56e-09 ***
+## female         7.864      3.838   2.049   0.0413 *  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 33.51 on 320 degrees of freedom
+## Multiple R-squared:  0.01295,    Adjusted R-squared:  0.009867 
+## F-statistic: 4.199 on 1 and 320 DF,  p-value: 0.04126
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# what can we say? }
+\DocumentationTok{\#\# we reject H0 ("female leadership has no effect”) is rejected at the 5\% level}
+\DocumentationTok{\#\# Also: Villages governed by female council heads have, on average, about 7.86 more }
+\DocumentationTok{\#\# new or repaired drinking water facilities than those governed by men}
+
+
+\DocumentationTok{\#\# However, I am confused about the phrasing "reservation policy" {-} so let\textquotesingle{}s check the }
+\DocumentationTok{\#\# effect of $reserved}
+
+\NormalTok{regression2 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(water }\SpecialCharTok{\textasciitilde{}}\NormalTok{ reserved, }\AttributeTok{data =}\NormalTok{ df)}
+\FunctionTok{summary}\NormalTok{(regression2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = water ~ reserved, data = df)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -23.991 -14.738  -7.865   2.262 316.009 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)   14.738      2.286   6.446 4.22e-10 ***
+## reserved       9.252      3.948   2.344   0.0197 *  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 33.45 on 320 degrees of freedom
+## Multiple R-squared:  0.01688,    Adjusted R-squared:  0.0138 
+## F-statistic: 5.493 on 1 and 320 DF,  p-value: 0.0197
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# we also reject H0 at 5\% level}
+\DocumentationTok{\#\# effect here is even bigger: villages that were reserved for female council heads}
+\DocumentationTok{\#\# have on average 9.25 more new or repaired water facilities}
+\end{Highlighting}
+\end{Shaded}
+
+
+\end{document}

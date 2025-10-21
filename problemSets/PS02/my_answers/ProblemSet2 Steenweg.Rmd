@@ -1,0 +1,125 @@
+---
+title: "ProblemSet2"
+author: "Onno"
+date: "2025-10-14"
+output:
+  word_document: default
+  html_document: default
+  pdf_document: default
+---
+
+```{r}
+#### Standard Procedure & Preparation
+## Clear working environment
+rm(list=ls())
+
+## Set working directory
+setwd("C:/Users/onnos/Desktop/TRINITY/PhD/RStudio")
+```
+
+### Question 1
+```{r}
+## Import our data into R, so create a matrix! we'll call it obs for observations
+obs <- matrix(c(14, 7,   # Not Stopped
+                6, 7,    # Bribe requested
+                7, 1),   # Stopped/given warning
+              nrow = 2,
+              byrow = FALSE)
+
+## make our table a bit more beautiful and easier to handle 
+rownames(obs) <- c("Upper Class", "Lower Class")
+colnames(obs) <- c("NotStopped", "Bribe", "Stopped")
+obs
+
+### SUBTASK 1 
+
+## calculate row and column means for chi square calcs
+row_totals <- rowSums(obs) ##27 and 15!
+col_totals <- colSums(obs) ##21, 13 and 8
+grand_total <- sum(obs) ##42
+
+## now we can calculate our expected number of observations that we need for chi^2
+expected <- outer(row_totals, col_totals) / grand_total
+## lets have a look
+expected
+
+## calculate chi^2 by estimating components and summing them
+chi_sq <- sum((obs - expected)^2 / expected)
+chi_sq
+## our chi^2 is 3.799!!
+
+
+### SUBTASK 2
+
+## First of all, let's calculate the degrees of freedom that we have 
+
+#### df=(r−1)(c−1)
+df <- (2-1)*(3-1)
+## df = 2
+
+# p-value
+p_value <- pchisq(chi_sq, df, lower.tail = F)
+p_value #0.15
+
+## -> we cannot reject the H0; p = 0.15, >.05
+## because 0.15 > .10 we even reject at 10% level
+
+
+### SUBTASK 3
+std_resid <- as.data.frame((obs - expected) / sqrt(expected))
+print(std_resid)
+
+
+### SUBTASK 4
+# they are a cell-level view of chi^2 results, so we can see exactly
+# which cells have exceedingly higher or lower observed than expected outcomes!
+# This gives us a finer grained view of patterns behind the single
+# test statistic (chi^2)
+
+```
+### Question 2
+```{r}
+## Load the data into R
+
+url <- "https://raw.githubusercontent.com/kosukeimai/qss/master/PREDICTION/women.csv"
+df <- read.csv(url, header = TRUE)
+
+## SUBTASK 1
+
+# H0: There is no difference in the number of new (or repaired) water sources
+# between villages that are lead by men and villages that are lead by women
+
+# H1: The number of new (or repaired) water sources in villages that are lead
+# lead by men is higher (or lower!) than in villages that are lead by women
+
+
+## SUBTASK 2
+
+## lets do the regression, first fit the model.. we take $female not $reserved, 
+## because we want to know ALL women
+regression <- lm(water ~ female, data = df)
+
+
+## SUBTASK 3 
+# lets see it
+summary(regression)
+## what can we say? 
+## we reject H0 ("female leadership has no effect”) is rejected at the 5% level
+## Also: Villages governed by female council heads have, on average, about 7.86 more 
+## new or repaired drinking water facilities than those governed by men
+
+
+## However, I am confused about the phrasing "reservation policy" - so let's check the 
+## effect of $reserved
+
+regression2 <- lm(water ~ reserved, data = df)
+summary(regression2)
+
+## we also reject H0 at 5% level
+## effect here is even bigger: villages that were reserved for female council heads
+## have on average 9.25 more new or repaired water facilities
+
+```
+
+
+
