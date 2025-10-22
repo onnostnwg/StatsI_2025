@@ -4,6 +4,8 @@
 \documentclass[
 ]{article}
 \usepackage{xcolor}
+\usepackage{titlesec}
+\titlespacing*{\subsubsection}{0pt}{*0}{0pt}
 \usepackage[margin=1in]{geometry}
 \usepackage{amsmath,amssymb}
 \setcounter{secnumdepth}{-\maxdimen} % remove section numbering
@@ -111,29 +113,31 @@
 \begin{document}
 \maketitle
 
+\subsection{1. Standard Preparation}\label{Preparation}%
+Before starting, we clear the working evironment and set the working directory with this code
 \begin{Shaded}
 \begin{Highlighting}[]
-\DocumentationTok{\#\#\#\# Standard Procedure \& Preparation}
-\DocumentationTok{\#\# Clear working environment}
 \FunctionTok{rm}\NormalTok{(}\AttributeTok{list=}\FunctionTok{ls}\NormalTok{())}
 
-\DocumentationTok{\#\# Set working directory}
 \FunctionTok{setwd}\NormalTok{(}\StringTok{"C:/Users/onnos/Desktop/TRINITY/PhD/RStudio"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\subsubsection{Question 1}\label{question-1}
+\subsection{2. Question 1}\label{question-1}
+This section gives the code to answers to the part a-d of the first question in the Problem Set.
+
+First, we need to import the data presented in the Problem Set into R. We'll do this manually using the code below: creating a matrix ("obs") that contains our values.
+
+Second, we change the row- and column names to match the original data and make the data easier understandable. the line "obs" opens the table to see if it worked.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\DocumentationTok{\#\# Import our data into R, so create a matrix! we\textquotesingle{}ll call it obs for observations}
 \NormalTok{obs }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{14}\NormalTok{, }\DecValTok{7}\NormalTok{,   }\CommentTok{\# Not Stopped}
                 \DecValTok{6}\NormalTok{, }\DecValTok{7}\NormalTok{,    }\CommentTok{\# Bribe requested}
                 \DecValTok{7}\NormalTok{, }\DecValTok{1}\NormalTok{),   }\CommentTok{\# Stopped/given warning}
               \AttributeTok{nrow =} \DecValTok{2}\NormalTok{,}
               \AttributeTok{byrow =} \ConstantTok{FALSE}\NormalTok{)}
 
-\DocumentationTok{\#\# make our table a bit more beautiful and easier to handle }
 \FunctionTok{rownames}\NormalTok{(obs) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Upper Class"}\NormalTok{, }\StringTok{"Lower Class"}\NormalTok{)}
 \FunctionTok{colnames}\NormalTok{(obs) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"NotStopped"}\NormalTok{, }\StringTok{"Bribe"}\NormalTok{, }\StringTok{"Stopped"}\NormalTok{)}
 \NormalTok{obs}
@@ -146,18 +150,23 @@
 ## Lower Class          7     7       1
 \end{verbatim}
 
+We can see that our original data is now imported into R. \newline
+
+
+\subsubsection{2.1. Subtask 1}\label{Question-1-Subtask-1}
+For our chi-square calculation we need to know some general info: our row and column sums, as well as the grand total of observations. 
+
+After this, we can calculate our expected values under the assupmtion of statistical independency of our variables. Statistic indedendence in this case means that we assume that the distributions of the population is identical across categories.
+
+We need the expected values for the chi-square calculation. The code saves them in the object "expected". The last line opens the new table with the expected distributions.
+
 \begin{Shaded}
 \begin{Highlighting}[]
-\DocumentationTok{\#\#\# SUBTASK 1 }
-
-\DocumentationTok{\#\# calculate row and column means for chi square calcs}
 \NormalTok{row\_totals }\OtherTok{\textless{}{-}} \FunctionTok{rowSums}\NormalTok{(obs) }\DocumentationTok{\#\#27 and 15!}
 \NormalTok{col\_totals }\OtherTok{\textless{}{-}} \FunctionTok{colSums}\NormalTok{(obs) }\DocumentationTok{\#\#21, 13 and 8}
 \NormalTok{grand\_total }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(obs) }\DocumentationTok{\#\#42}
 
-\DocumentationTok{\#\# now we can calculate our expected number of observations that we need for chi\^{}2}
 \NormalTok{expected }\OtherTok{\textless{}{-}} \FunctionTok{outer}\NormalTok{(row\_totals, col\_totals) }\SpecialCharTok{/}\NormalTok{ grand\_total}
-\DocumentationTok{\#\# lets have a look}
 \NormalTok{expected}
 \end{Highlighting}
 \end{Shaded}
@@ -168,87 +177,104 @@
 ## Lower Class        7.5 4.642857 2.857143
 \end{verbatim}
 
+We can see that our calculations worked. The table above shows the expected values.
+
+We can now calculate our chi-square using the standard formula:
+
 \begin{Shaded}
 \begin{Highlighting}[]
-\DocumentationTok{\#\# calculate chi\^{}2 by estimating components and summing them}
 \NormalTok{chi\_sq }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{((obs }\SpecialCharTok{{-}}\NormalTok{ expected)}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{/}\NormalTok{ expected)}
 \NormalTok{chi\_sq}
 \end{Highlighting}
 \end{Shaded}
+We can see, our chi-square value is 3.791168\newline
+This is the test statistic that we are going to use for our hypothesis test(s).\newline
 
-\begin{verbatim}
-## [1] 3.791168
-\end{verbatim}
 
+\subsubsection{2.2. Subtask 2}\label{Subtask-2-Question-1}
+For this task, we need to first calculate our degrees of freedom using the standard fomula: df=(r−1)*(c−1). We have two rows and three columns in our data.
+
+Using this we can then calculate our p-value. The code below does all this.  
 \begin{Shaded}
 \begin{Highlighting}[]
-\DocumentationTok{\#\# our chi\^{}2 is 3.799!!}
-
-
-\DocumentationTok{\#\#\# SUBTASK 2}
-
-\DocumentationTok{\#\# First of all, let\textquotesingle{}s calculate the degrees of freedom that we have }
-
-\DocumentationTok{\#\#\#\# df=(r−1)(c−1)}
 \NormalTok{df }\OtherTok{\textless{}{-}}\NormalTok{ (}\DecValTok{2{-}1}\NormalTok{)}\SpecialCharTok{*}\NormalTok{(}\DecValTok{3{-}1}\NormalTok{)}
-\DocumentationTok{\#\# df = 2}
 
-\CommentTok{\# p{-}value}
 \NormalTok{p\_value }\OtherTok{\textless{}{-}} \FunctionTok{pchisq}\NormalTok{(chi\_sq, df, }\AttributeTok{lower.tail =}\NormalTok{ F)}
-\NormalTok{p\_value }\CommentTok{\#0.15}
+\NormalTok{p\_value}
 \end{Highlighting}
 \end{Shaded}
-
 \begin{verbatim}
 ## [1] 0.1502306
 \end{verbatim}
+We can see - our calculated p-value is 0.15\newline
+At the 0.1 significance level, the p-value of 0.15 indicates that we do not reject the null hypothesis. There is no statistically significant evidence that the observed frequencies differ from the expected frequencies (or that the variables are dependent).\newline
 
+
+\subsubsection{2.3. Subtask 3}\label{Subtask-3-Question-1}
+We want to know our standardized residuals. Using the standard fomula, we run this code:
 \begin{Shaded}
 \begin{Highlighting}[]
-\DocumentationTok{\#\# {-}\textgreater{} we cannot reject the H0; p = 0.15, \textgreater{}.05}
-\DocumentationTok{\#\# because 0.15 \textgreater{} .10 we even reject at 10\% level}
-
-
-\DocumentationTok{\#\#\# SUBTASK 3}
 \NormalTok{std\_resid }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{((obs }\SpecialCharTok{{-}}\NormalTok{ expected) }\SpecialCharTok{/} \FunctionTok{sqrt}\NormalTok{(expected))}
-\FunctionTok{View}\NormalTok{(std\_resid)}
-
-
-\DocumentationTok{\#\#\# SUBTASK 4}
-\CommentTok{\# they are a cell{-}level view of chi\^{}2 results, so we can see exactly}
-\CommentTok{\# which cells have exceedingly higher or lower observed than expected outcomes!}
-\CommentTok{\# This gives us a finer grained view of patterns behind the single}
-\CommentTok{\# test statistic (chi\^{}2)}
+\FunctionTok{print}\NormalTok{(std\_resid)}
 \end{Highlighting}
 \end{Shaded}
 
-\subsubsection{Question 2}\label{question-2}
+\begin{verbatim}
+##             NotStopped      Bribe   Stopped
+## Upper Class  0.1360828 -0.8153742  0.818923
+## Lower Class -0.1825742  1.0939393 -1.098701
+\end{verbatim}
+We can see that the caluclation works, the standardized residuals are in the table above. 
+In the table presented in the ProblemSet, it looks like this: 
+\begin{table}[h]
+	\centering
+	\begin{tabular}{l | c c c }
+		& Not Stopped & Bribe requested & Stopped/given warning \\
+		\\[-1.8ex] 
+		\hline \\[-1.8ex]
+		Upper class  & 0.136 & -0.815 & 0.819 \\
+		\\[-1.8ex]
+		Lower class & -0.183 & 1.094 & -1.099 \\
+	\end{tabular}
+	\caption{Standardized residuals from the Chi-square test by class and outcome}
+	\label{tab:chi2-residuals}
+\end{table}
 
+\subsubsection{2.4. Subtask 4}\label{subtask-4-question-1}
+Standardized residuals in Chi-square tests provide a detailed, cell-level view of the results. While the overall Chi-square statistic indicates whether the observed frequencies deviate significantly from the expected ones, standardized residuals show which cells have observed values that are unusually higher or lower than expected. Positive residuals indicate that a value is above expectation, negative residuals indicate it is below, and the magnitude reflects the strength of the deviation. These residuals are important because they give a finer-grained picture of the patterns behind the single test statistic and can reveal interesting local deviations even when the overall test is not significant. They help identify which cells are driving the observed associations or differences in the data. 
+
+Regarding our table from Subtask 3 we can now say: 
+The cell-level standardized residuals show only minor deviations from expected counts, with all residuals less than 2 in magnitude. This indicates that none of the individual cells differ notably from expectation, consistent with the overall Chi-square test result of p = 0.15, and suggests no strong association between social class and the stopping outcome.\newline
+
+
+\subsection{3. Question 2}\label{question-2}
+To start, we need to load the data into our environment. To do so, we save the URL of the data as an object and then read it from that url into the environment.
 \begin{Shaded}
 \begin{Highlighting}[]
-\DocumentationTok{\#\# Load the data into R}
-
 \NormalTok{url }\OtherTok{\textless{}{-}} \StringTok{"https://raw.githubusercontent.com/kosukeimai/qss/master/PREDICTION/women.csv"}
 \NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(url, }\AttributeTok{header =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
-\DocumentationTok{\#\# SUBTASK 1}
+\subsubsection{3.1. Subtask 1}\label{subtask-1}
 
-\CommentTok{\# H0: There is no difference in the number of new (or repaired) water sources}
-\CommentTok{\# between villages that are lead by men and villages that are lead by women}
+H0: There is no difference in the number of new (or repaired) water sources between villages that are lead by men and villages that are lead by women
 
-\CommentTok{\# H1: The number of new (or repaired) water sources in villages that are lead}
-\CommentTok{\# lead by men is higher (or lower!) than in villages that are lead by women}
+H1: The number of new (or repaired) water sources in villages that are lead by men is higher (or lower!) than in villages that are lead by women
 
 
-\DocumentationTok{\#\# SUBTASK 2}
-
-\DocumentationTok{\#\# lets do the regression, first fit the model.. we take $female not $reserved, }
-\DocumentationTok{\#\# because we want to know ALL women}
+\subsubsection{3.2. Subtask 2}\label{subtask-2}
+To run the regression, we first need to fit our model. The code below specifies the model. We take the variable "female" not "reserved" because we want the effect of women-led villages, not only the effect in the villages that were reserved for women.
+\begin{Shaded}
+\begin{Highlighting}[]
 \NormalTok{regression }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(water }\SpecialCharTok{\textasciitilde{}}\NormalTok{ female, }\AttributeTok{data =}\NormalTok{ df)}
+\end{Highlighting}
+\end{Shaded}
 
-
-\DocumentationTok{\#\# SUBTASK 3 }
-\CommentTok{\# lets see it}
+\subsubsection{3.3. Subtask 3}\label{subtask-3}
+First, let's see the results of the regression.
+\begin{Shaded}
+\begin{Highlighting}[]
 \FunctionTok{summary}\NormalTok{(regression)}
 \end{Highlighting}
 \end{Shaded}
@@ -274,17 +300,15 @@
 ## F-statistic: 4.199 on 1 and 320 DF,  p-value: 0.04126
 \end{verbatim}
 
+
+The regression results indicate that female leadership has a positive effect on the number of new or repaired drinking water facilities. Villages governed by female council heads are predicted to have, on average, about 7.86 more facilities than those governed by men. This effect is statistically significant at the 5\% level (p = 0.041), allowing us to reject the null hypothesis that female leadership has no impact. However, the model explains only a small portion of the variation in water facilities (R Squared = 0.013), suggesting that other factors also play an important role.
+
+
+
+However, I am confused about the phrasing "reservation policy" in the question, so let's check the effect of "reserved" as well in a second regression model. 
+
 \begin{Shaded}
-\begin{Highlighting}[]
-\DocumentationTok{\#\# what can we say? }
-\DocumentationTok{\#\# we reject H0 ("female leadership has no effect”) is rejected at the 5\% level}
-\DocumentationTok{\#\# Also: Villages governed by female council heads have, on average, about 7.86 more }
-\DocumentationTok{\#\# new or repaired drinking water facilities than those governed by men}
-
-
-\DocumentationTok{\#\# However, I am confused about the phrasing "reservation policy" {-} so let\textquotesingle{}s check the }
-\DocumentationTok{\#\# effect of $reserved}
-
+	\begin{Highlighting}[]
 \NormalTok{regression2 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(water }\SpecialCharTok{\textasciitilde{}}\NormalTok{ reserved, }\AttributeTok{data =}\NormalTok{ df)}
 \FunctionTok{summary}\NormalTok{(regression2)}
 \end{Highlighting}
@@ -311,13 +335,6 @@
 ## F-statistic: 5.493 on 1 and 320 DF,  p-value: 0.0197
 \end{verbatim}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\DocumentationTok{\#\# we also reject H0 at 5\% level}
-\DocumentationTok{\#\# effect here is even bigger: villages that were reserved for female council heads}
-\DocumentationTok{\#\# have on average 9.25 more new or repaired water facilities}
-\end{Highlighting}
-\end{Shaded}
-
+We also reject the null hypothesis at the 5\% level. The effect is even larger in this case: villages that were reserved for female council heads have, on average, 9.25 more new or repaired drinking water facilities than villages governed by men.
 
 \end{document}

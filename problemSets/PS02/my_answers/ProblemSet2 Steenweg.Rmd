@@ -3,9 +3,9 @@ title: "ProblemSet2"
 author: "Onno"
 date: "2025-10-14"
 output:
-  word_document: default
-  html_document: default
   pdf_document: default
+  html_document: default
+  word_document: default
 ---
 
 ```{r}
@@ -18,6 +18,8 @@ setwd("C:/Users/onnos/Desktop/TRINITY/PhD/RStudio")
 ```
 
 ### Question 1
+
+##Preparation
 ```{r}
 ## Import our data into R, so create a matrix! we'll call it obs for observations
 obs <- matrix(c(14, 7,   # Not Stopped
@@ -31,8 +33,11 @@ rownames(obs) <- c("Upper Class", "Lower Class")
 colnames(obs) <- c("NotStopped", "Bribe", "Stopped")
 obs
 
-### SUBTASK 1 
 
+```
+
+### SUBTASK 1, Question 1
+```{r}
 ## calculate row and column means for chi square calcs
 row_totals <- rowSums(obs) ##27 and 15!
 col_totals <- colSums(obs) ##21, 13 and 8
@@ -47,10 +52,10 @@ expected
 chi_sq <- sum((obs - expected)^2 / expected)
 chi_sq
 ## our chi^2 is 3.799!!
+```
 
-
-### SUBTASK 2
-
+### SUBTASK 2, Question 1
+```{r}
 ## First of all, let's calculate the degrees of freedom that we have 
 
 #### df=(r−1)(c−1)
@@ -63,12 +68,13 @@ p_value #0.15
 
 ## -> we cannot reject the H0; p = 0.15, >.05
 ## because 0.15 > .10 we even reject at 10% level
+```
 
-
-### SUBTASK 3
+### SUBTASK 3, Question 1
+```{r}
 std_resid <- as.data.frame((obs - expected) / sqrt(expected))
 print(std_resid)
-
+```
 
 ### SUBTASK 4
 # they are a cell-level view of chi^2 results, so we can see exactly
@@ -76,7 +82,9 @@ print(std_resid)
 # This gives us a finer grained view of patterns behind the single
 # test statistic (chi^2)
 
-```
+
+
+
 ### Question 2
 ```{r}
 ## Load the data into R
@@ -92,15 +100,18 @@ df <- read.csv(url, header = TRUE)
 # H1: The number of new (or repaired) water sources in villages that are lead
 # lead by men is higher (or lower!) than in villages that are lead by women
 
+```
 
-## SUBTASK 2
-
+## SUBTASK 2, Question 2
+```{r}
 ## lets do the regression, first fit the model.. we take $female not $reserved, 
 ## because we want to know ALL women
 regression <- lm(water ~ female, data = df)
+```
 
 
-## SUBTASK 3 
+## SUBTASK 3, Question 2
+```{r}
 # lets see it
 summary(regression)
 ## what can we say? 
@@ -120,6 +131,4 @@ summary(regression2)
 ## have on average 9.25 more new or repaired water facilities
 
 ```
-
-
 
