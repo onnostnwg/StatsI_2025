@@ -1,0 +1,549 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Problem Set 3},
+  pdfauthor={Onno Steenweg},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Problem Set 3}
+\author{Onno Steenweg; Applied Stats/Quant Methods 1, Trinity College Dublin 25/26}
+\date{12.11.2025}
+
+\begin{document}
+\maketitle
+
+\section*{Loading Data \& Preparation}
+I start by emptying my working environment and setting the working directory. After that I load the data for all subsequent analyses. In this case I called the dataset "inc.sub". I also load the necessary R packages, which in this case is only ggplot2. All of these tasks are done using the R code in the box below: 
+\begin{Shaded}
+	\begin{Highlighting}[]
+\NormalTok{knitr}\SpecialCharTok{::}\NormalTok{opts\_chunk}\SpecialCharTok{$}\FunctionTok{set}\NormalTok{(}\AttributeTok{echo =} \ConstantTok{TRUE}\NormalTok{)}
+\FunctionTok{rm}\NormalTok{(}\AttributeTok{list=}\FunctionTok{ls}\NormalTok{())}
+\FunctionTok{setwd}\NormalTok{(}\StringTok{"C:/Users/onnos/Documents/GitHub/StatsI\_2025/problemSets/PS03/my\_answers"}\NormalTok{)}
+\NormalTok{inc.sub }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}
+\StringTok{"https://raw.githubusercontent.com/ASDS{-}TCD/StatsI_2025/main/datasets/incumbents_subset.csv"}\NormalTok{)}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+	\end{Highlighting}
+\end{Shaded}
+
+
+
+
+\section*{Question 1}
+\noindent We are interested in knowing how the difference in campaign spending between incumbent and challenger affects the incumbent's vote share. 
+\begin{enumerate}
+	\item Run a regression where the outcome variable is \texttt{voteshare} and the explanatory variable is \texttt{difflog}.
+\end{enumerate}
+To fullfil this task, I define a OLS model with difflog being the explanatory variable and voteshare the outcome variable. The code in the box below specifies this model in R, runs it and gives back a summary of the results:
+\begin{Shaded}
+	\begin{Highlighting}[]
+\NormalTok{model\_voteshare }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(voteshare }\SpecialCharTok{\textasciitilde{}}\NormalTok{ difflog, }\AttributeTok{data =}\NormalTok{ inc.sub)}
+\FunctionTok{summary}\NormalTok{(model\_voteshare)}
+	\end{Highlighting}
+\end{Shaded}
+
+The output below shows the results of the OLS model. The regression results show a strong positive relationship between the incumbent’s spending advantage and their vote share. When the incumbent and challenger spend the same amount (i.e., when the log difference in spending is zero), the incumbent is expected to receive about 57.9\% of the vote. The coefficient on the log difference in spending (0.0417) indicates that for each one-unit increase in difflog - meaning the incumbent spends e times as much as the challenger - their vote share increases by roughly 4.2 percentage points. This effect is highly statistically significant (p < 0.001), suggesting a robust association between spending advantage and electoral success. The model explains about 36.7\% of the variation in incumbents’ vote shares, a substantial proportion given that it includes only one predictor. Overall, the findings imply that greater campaign spending relative to challengers is strongly associated with higher vote shares for incumbents. \newpage
+
+\begin{verbatim}
+	## 
+	## Call:
+	## lm(formula = voteshare ~ difflog, data = inc.sub)
+	## 
+	## Residuals:
+	##      Min       1Q   Median       3Q      Max 
+	## -0.26832 -0.05345 -0.00377  0.04780  0.32749 
+	## 
+	## Coefficients:
+	##             Estimate Std. Error t value Pr(>|t|)    
+	## (Intercept) 0.579031   0.002251  257.19   <2e-16 ***
+	## difflog     0.041666   0.000968   43.04   <2e-16 ***
+	## ---
+	## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+	## 
+	## Residual standard error: 0.07867 on 3191 degrees of freedom
+	## Multiple R-squared:  0.3673, Adjusted R-squared:  0.3671 
+	## F-statistic:  1853 on 1 and 3191 DF,  p-value: < 2.2e-16
+\end{verbatim}
+\vspace{.5cm}
+
+\begin{enumerate}\setcounter{enumi}{1}
+	\item Make a scatterplot of the two variables and add the regression line.
+\end{enumerate}
+To fullfil this task, I used the ggplot2 package to first create a scatterplot. The code belox creates the plot, inserts a regression line and defines the titles for the axes:
+\begin{Shaded}
+	\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(inc.sub, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ difflog, }\AttributeTok{y =}\NormalTok{ voteshare)) }\SpecialCharTok{+}
+	\FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{color =} \StringTok{"grey30"}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+}          \CommentTok{\# Scatter points}
+	\FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{color =} \StringTok{"red"}\NormalTok{, }\AttributeTok{fill =} \StringTok{"pink"}\NormalTok{, }\AttributeTok{se =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{+}  
+	\FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Graph 1: Incumbent Vote Share vs. Log Spending Difference"}\NormalTok{,}
+	\AttributeTok{x =} \StringTok{"Difference in Campaign Spending (log)"}\NormalTok{,}
+	\AttributeTok{y =} \StringTok{"Incumbent Vote Share"}\NormalTok{) }\SpecialCharTok{+}
+	\FunctionTok{theme\_minimal}\NormalTok{(}\AttributeTok{base\_size =} \DecValTok{10}\NormalTok{) }\SpecialCharTok{+}
+	\FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{))}
+	\end{Highlighting}
+\end{Shaded}
+
+The scatterplot below illustrates the relationship between the incumbent’s vote share and the logarithmic difference in campaign spending. Consistent with the OLS results from task 1 of this question, the plot shows a clear positive association: as the incumbent’s spending advantage increases, their vote share tends to rise. This pattern is emphasized by the upward-sloping regression line, which has an intercept around 0.58, indicating that when spending is equal between candidates, incumbents still average about 58\% of the vote.
+
+\pandocbounded{\includegraphics[keepaspectratio]{Problem-Set-3-Steenweg_files/figure-latex/unnamed-chunk-2-1.png}}
+\vspace{.5cm}
+
+
+\begin{enumerate}\setcounter{enumi}{2}
+	\item Save the residuals of the model in a separate object.
+\end{enumerate}
+
+To fulfill this task, the code below saves the residuals from the model estimated in Task 1 of this question into a separate object. The following command displays the first six residuals of the model.
+
+\begin{Shaded}
+	\begin{Highlighting}[]
+\NormalTok{residuals\_voteshare }\OtherTok{\textless{}{-}} \FunctionTok{residuals}\NormalTok{(model\_voteshare)}
+\FunctionTok{head}\NormalTok{(residuals\_voteshare)}
+	\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+	##             1             2             3             4             5 
+	## -0.0004227622 -0.0316840149 -0.0045514943  0.0386688767  0.0355287965 
+	##             6 
+	##  0.0322832521
+\end{verbatim}
+
+The task specifically required saving the residuals in a separate object. However, since we will need these residuals as a variable later in this problem set, they are also stored directly in the dataset as follows:
+\begin{Shaded}
+	\begin{Highlighting}[]
+\NormalTok{inc.sub}\SpecialCharTok{$}\NormalTok{residuals1 }\OtherTok{\textless{}{-}} \FunctionTok{residuals}\NormalTok{(model\_voteshare)}
+	\end{Highlighting}
+\end{Shaded}
+\vspace{0.5cm}
+
+
+\begin{enumerate}\setcounter{enumi}{3}
+	\item Write the prediction equation.
+\end{enumerate}
+
+\noindent The general form of the linear regression model that we will use in this and all subsequent tasks is given by:
+\[
+y_i = \beta_0 + \beta_1 x_i + \varepsilon_i
+\]
+where (in the example at hand in this question) \(y_i\) represents the dependent variable (vote share), \(x_i\) is the independent variable (log difference in campaign spending), \(\beta_0\) is the intercept, \(\beta_1\) is the slope coefficient, and \(\varepsilon_i\) is the error term.
+
+In a prediction equation, the error term $\varepsilon_i$ is usually only included when we are interested in the fitted or predicted values rather than the actual observed values. The error term represents the difference between the observed value and the predicted value, which is unknown for new observations. By focusing on $\hat{y}_i$ (the predicted value), we get a deterministic estimate based on the model coefficients. Including $\varepsilon_i$ shows the full regression model and emphasizes that predictions are subject to unexplained variation, but it is not needed when the goal is simply to compute or report predicted values. Hence, all following prediction equations will not include $\varepsilon_i$.
+
+
+\noindent For our specific example, the estimated regression equation is:
+\[
+\widehat{\text{voteshare}} = 0.5076 + 0.0238 \times \text{difflog}
+\]
+
+This equation indicates that when the incumbent and challenger spend equally (\(\text{difflog} = 0\)), the expected incumbent vote share is 50.76\%. Furthermore, each one-unit increase in the log spending difference (i.e., when the incumbent spends \(e\) times more than the challenger) is associated with an increase of approximately 2.38 percentage points in the incumbent’s vote share.
+
+
+\section*{Question 2}
+\noindent We are interested in knowing how the difference between incumbent and challenger's spending and the vote share of the presidential candidate of the incumbent's party are related.	\vspace{.5cm}
+\begin{enumerate}
+	\item Run a regression where the outcome variable is \texttt{presvote} and the explanatory variable is \texttt{difflog}.
+\end{enumerate}
+To fullfil this task, I define a OLS model with difflog being the explanatory variable and presvote the outcome variable. The code in the box below specifies this model in R, runs it and gives back a summary of the results:
+\begin{Shaded}
+	\begin{Highlighting}[]
+\NormalTok{model\_presvote }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(presvote }\SpecialCharTok{\textasciitilde{}}\NormalTok{ difflog, }\AttributeTok{data =}\NormalTok{ inc.sub)}
+\FunctionTok{summary}\NormalTok{(model\_presvote)}
+	\end{Highlighting}
+\end{Shaded}
+
+The output below shows the results of the OLS model. The regression results show a statistically significant positive relationship between the log difference in campaign spending (difflog) and the presidential vote share for the incumbent’s party (presvote). The intercept of 0.5076 indicates that when campaign spending by the incumbent’s party and the challenger’s party is equal (difflog=0), the presidential candidate of the incumbent’s party is expected to receive about 50.8\% of the vote. The coefficient for difflog (0.0238) suggests that for each one-unit increase in the log spending difference—meaning the incumbent’s party spends e times more than the challenger’s—their presidential candidate’s vote share increases by roughly 2.4 percentage points. Although the model explains only about 8.8\% of the variation in presidential vote share (R² = 0.0879), the relationship is highly statistically significant (p < 0.001), indicating that campaign spending advantage is a meaningful, though not dominant, predictor of presidential vote performance. \newpage
+
+\begin{verbatim}
+	## 
+	## Call:
+	## lm(formula = presvote ~ difflog, data = inc.sub)
+	## 
+	## Residuals:
+	##      Min       1Q   Median       3Q      Max 
+	## -0.32196 -0.07407 -0.00102  0.07151  0.42743 
+	## 
+	## Coefficients:
+	##             Estimate Std. Error t value Pr(>|t|)    
+	## (Intercept) 0.507583   0.003161  160.60   <2e-16 ***
+	## difflog     0.023837   0.001359   17.54   <2e-16 ***
+	## ---
+	## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+	## 
+	## Residual standard error: 0.1104 on 3191 degrees of freedom
+	## Multiple R-squared:  0.08795,    Adjusted R-squared:  0.08767 
+	## F-statistic: 307.7 on 1 and 3191 DF,  p-value: < 2.2e-16
+\end{verbatim}
+\vspace{.5cm}
+
+\begin{enumerate}\setcounter{enumi}{1}
+	\item Make a scatterplot of the two variables and add the regression line. 
+\end{enumerate}
+To fullfil this task, I used the ggplot2 package to first create a scatterplot. The code belox creates the plot, inserts a regression line and defines the titles for the axes:
+\begin{Shaded}
+	\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(inc.sub, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ difflog, }\AttributeTok{y =}\NormalTok{ presvote)) }\SpecialCharTok{+}
+	\FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{color =} \StringTok{"grey30"}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+}          
+	\FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{color =} \StringTok{"red"}\NormalTok{, }\AttributeTok{fill =} \StringTok{"pink"}\NormalTok{, }\AttributeTok{se =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{+}  
+	\FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Graph 2: Presid. Candidate (incumbent\textquotesingle{}s party) Vote Share vs. Log Spending Diff."}\NormalTok{,}
+	\AttributeTok{x =} \StringTok{"Difference in Campaign Spending (log)"}\NormalTok{,}
+	\AttributeTok{y =} \StringTok{"Presidential Candidate (incumbent\textquotesingle{}s party) Vote Share"}\NormalTok{) }\SpecialCharTok{+}
+	\FunctionTok{theme\_minimal}\NormalTok{(}\AttributeTok{base\_size =} \DecValTok{10}\NormalTok{) }\SpecialCharTok{+}
+	\FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{))}
+	\end{Highlighting}
+\end{Shaded}
+
+
+The scatterplot below illustrates the relationship between the vote share of the presidential candidate from the incumbent’s party and the logarithmic difference in campaign spending. Consistent with the OLS results from Task 1, the plot shows a clear positive association: as the incumbent’s party increases its spending relative to the challenger’s, its presidential candidate tends to receive a higher vote share. This pattern is emphasized by the upward-sloping regression line, which has an intercept around 0.51, indicating that when campaign spending is equal between the two parties, the incumbent’s party’s presidential candidate is expected to win approximately 51\% of the vote.
+
+\pandocbounded{\includegraphics[keepaspectratio]{Problem-Set-3-Steenweg_files/figure-latex/unnamed-chunk-6-1.png}}
+\vspace{.5cm}
+
+\begin{enumerate}\setcounter{enumi}{2}
+	\item Save the residuals of the model in a separate object.	
+\end{enumerate}
+
+To fulfill this task, the code below saves the residuals from the model estimated in Task 1 of this question into a separate object. The following command displays the first six residuals of this model.
+
+\begin{Shaded}
+	\begin{Highlighting}[]
+\NormalTok{residuals\_presvote }\OtherTok{\textless{}{-}} \FunctionTok{residuals}\NormalTok{(model\_presvote)}
+\FunctionTok{head}\NormalTok{(residuals\_presvote)}
+	\end{Highlighting}
+\end{Shaded} 
+
+\begin{verbatim}
+	##            1            2            3            4            5            6 
+	##  0.005605594  0.037578519 -0.053134788 -0.052993694 -0.045842994  0.074339701
+\end{verbatim}
+
+The task specifically required saving the residuals in a separate object. However, since we will need these residuals as a variable later in this problem set, they are also stored directly in the dataset as shown in the code below:
+\begin{Shaded}
+	\begin{Highlighting}[]
+\NormalTok{inc.sub}\SpecialCharTok{$}\NormalTok{residuals2 }\OtherTok{\textless{}{-}} \FunctionTok{residuals}\NormalTok{(model\_presvote)}
+	\end{Highlighting}
+\end{Shaded}
+\vspace{0.5cm}
+
+	
+\begin{enumerate}\setcounter{enumi}{3}
+	\item Write the prediction equation.
+\end{enumerate}
+
+\noindent For the current example, the estimated regression equation is:
+\[
+\widehat{\text{presvote}} = 0.5076 + 0.0238 \times \text{difflog}
+\]
+This indicates that when campaign spending is equal between the incumbent’s and challenger’s parties (\(\text{difflog} = 0\)), the presidential candidate of the incumbent’s party is expected to receive about 50.76\% of the vote. Each one-unit increase in the log spending difference is associated with an increase of approximately 2.38 percentage points in the candidate’s vote share.
+
+
+\section*{Question 3}
+
+\noindent We are interested in knowing how the vote share of the presidential candidate of the incumbent's party is associated with the incumbent's electoral success.
+\vspace{.5cm}
+\begin{enumerate}
+	\item Run a regression where the outcome variable is \texttt{voteshare} and the explanatory variable is \texttt{presvote}.
+\end{enumerate}
+To fullfil this task, I define a OLS model with difflog being the explanatory variable is presvote and voteshare the outcome variable. The code in the box below specifies this model in R, runs it and gives back a summary of the results:
+\begin{Shaded}
+	\begin{Highlighting}[]
+\NormalTok{model\_voteshare\_presvote }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(voteshare }\SpecialCharTok{\textasciitilde{}}\NormalTok{ presvote, }\AttributeTok{data =}\NormalTok{ inc.sub)}
+\FunctionTok{summary}\NormalTok{(model\_voteshare\_presvote)}
+	\end{Highlighting}
+\end{Shaded}
+
+The output below shows the results of this OLS model. The regression results indicate a strong positive relationship between the presidential vote share of the incumbent’s party (presvote) and the incumbent’s own vote share (voteshare). The intercept of 0.4413 suggests that if the presidential candidate of the incumbent’s party received 0\% of the vote, the incumbent would still be expected to receive about 44.1\% of the vote, although such a scenario is theoretical. The coefficient on presvote (0.3880) shows that for each additional 1 percentage point in the presidential candidate’s vote share, the incumbent’s vote share increases by approximately 0.39 percentage points. This relationship is highly statistically significant (p < 0.001). The model explains roughly 20.6\% of the variation in incumbents’ vote shares (R² = 0.2058), indicating that while the presidential vote is an important predictor, other factors also influence incumbents’ electoral outcomes. 
+\begin{verbatim}
+	## 
+	## Call:
+	## lm(formula = voteshare ~ presvote, data = inc.sub)
+	## 
+	## Residuals:
+	##      Min       1Q   Median       3Q      Max 
+	## -0.27330 -0.05888  0.00394  0.06148  0.41365 
+	## 
+	## Coefficients:
+	##             Estimate Std. Error t value Pr(>|t|)    
+	## (Intercept) 0.441330   0.007599   58.08   <2e-16 ***
+	## presvote    0.388018   0.013493   28.76   <2e-16 ***
+	## ---
+	## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+	## 
+	## Residual standard error: 0.08815 on 3191 degrees of freedom
+	## Multiple R-squared:  0.2058, Adjusted R-squared:  0.2056 
+	## F-statistic:   827 on 1 and 3191 DF,  p-value: < 2.2e-16
+\end{verbatim}
+\vspace{.5cm} \newpage
+
+\begin{enumerate}\setcounter{enumi}{1}
+	\item Make a scatterplot of the two variables and add the regression line. 
+\end{enumerate}
+To fullfil this task, I used the ggplot2 package to first create a scatterplot. The code belox creates the plot, inserts a regression line and defines the titles for the axes:
+\begin{Shaded}
+	\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(inc.sub, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ presvote, }\AttributeTok{y =}\NormalTok{ voteshare)) }\SpecialCharTok{+}
+	\FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{color =} \StringTok{"grey30"}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+}          
+	\FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{color =} \StringTok{"red"}\NormalTok{, }\AttributeTok{fill =} \StringTok{"pink"}\NormalTok{, }\AttributeTok{se =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{+}  
+	\FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Graph 3: Presidential Candidate (incumbent\textquotesingle{}s party) Vote Share vs. Incumbent Vote Share"}\NormalTok{,}
+	\AttributeTok{x =} \StringTok{"Presidential Candidate (incumbent\textquotesingle{}s party) Vote Share"}\NormalTok{,}
+	\AttributeTok{y =} \StringTok{"Incumbent Vote Share"}\NormalTok{) }\SpecialCharTok{+}
+	\FunctionTok{theme\_minimal}\NormalTok{(}\AttributeTok{base\_size =} \DecValTok{10}\NormalTok{) }\SpecialCharTok{+}
+	\FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{))}
+	\end{Highlighting}
+\end{Shaded}
+
+The scatterplot below illustrates the relationship between the incumbent’s vote share and the vote share of the presidential candidate from the incumbent’s party. Consistent with the OLS results from Task 1 of this question, the plot shows a positive correlation: as the presidential candidate’s vote share increases, the incumbent’s vote share also tends to rise. This pattern is highlighted by the upward-sloping regression line, which has an intercept around 0.44; although this value is not visible on the plot because all observed election results are positive.
+
+\pandocbounded{\includegraphics[keepaspectratio]{Problem-Set-3-Steenweg_files/figure-latex/unnamed-chunk-10-1.png}}
+\vspace{.5cm}
+
+\begin{enumerate}\setcounter{enumi}{2}
+	\item Write the prediction equation.
+\end{enumerate}
+
+\noindent In this model \(y_i\) is the dependent variable (incumbent's vote share), \(x_i\) is the independent variable (presidential vote share of the incumbent's party), \(\beta_0\) is the intercept, \(\beta_1\) is the slope coefficient.
+
+\noindent For the example at hand, the estimated regression equation is:
+\[
+\widehat{\text{voteshare}} = 0.4413 + 0.3880 \times \text{presvote}
+\]
+This equation indicates that if the presidential candidate of the incumbent’s party received 0\% of the vote, the incumbent would be expected to receive about 44.13\% of the vote. Furthermore, each additional 1 percentage point in the presidential candidate’s vote share is associated with an increase of approximately 0.39 percentage points in the incumbent’s vote share.
+
+
+
+
+
+\section*{Question 4}
+\noindent The residuals from part (a) tell us how much of the variation in \texttt{voteshare} is $not$ explained by the difference in spending between incumbent and challenger. The residuals in part (b) tell us how much of the variation in \texttt{presvote} is $not$ explained by the difference in spending between incumbent and challenger in the district.
+\begin{enumerate}
+	\item Run a regression where the outcome variable is the residuals from Question 1 and the explanatory variable is the residuals from Question 2.
+\end{enumerate}
+To fullfil this task, I define a OLS model with residuals2 being the explanatory variable and residuals1 the outcome variable. Both variables were created in Task 3 in Questions 1 and 2. The code in the box below specifies this model in R, runs it and gives back a summary of the results:
+\begin{Shaded}
+	\begin{Highlighting}[]
+\NormalTok{model\_residuals }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(residuals1 }\SpecialCharTok{\textasciitilde{}}\NormalTok{ residuals2, }\AttributeTok{data =}\NormalTok{ inc.sub)}
+\FunctionTok{summary}\NormalTok{(model\_residuals)}
+	\end{Highlighting}
+\end{Shaded}
+The output below shows the results of this model. The regression examines the relationship between the residuals of the incumbent’s vote share model (residuals1) and the residuals of the presidential vote share model (residuals2). The intercept is effectively zero (-5.93 × $10^{-18}$) and not statistically significant, indicating no systematic offset between the residuals. The coefficient on residuals2 is 0.2569, meaning that for each one-unit increase in the presidential residual, the incumbent’s vote share residual increases by roughly 0.26 units. This relationship is highly statistically significant (p < 0.001), suggesting that deviations in the presidential vote share from what is predicted by campaign spending are positively associated with deviations in the incumbent’s vote share. The model explains about 13\% of the variation in the incumbent residuals (R² = 0.13), indicating a moderate association between the two sets of residuals.
+\begin{verbatim}
+	## 
+	## Call:
+	## lm(formula = residuals1 ~ residuals2, data = inc.sub)
+	## 
+	## Residuals:
+	##      Min       1Q   Median       3Q      Max 
+	## -0.25928 -0.04737 -0.00121  0.04618  0.33126 
+	## 
+	## Coefficients:
+	##               Estimate Std. Error t value Pr(>|t|)    
+	## (Intercept) -5.934e-18  1.299e-03    0.00        1    
+	## residuals2   2.569e-01  1.176e-02   21.84   <2e-16 ***
+	## ---
+	## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+	## 
+	## Residual standard error: 0.07338 on 3191 degrees of freedom
+	## Multiple R-squared:   0.13,  Adjusted R-squared:  0.1298 
+	## F-statistic:   477 on 1 and 3191 DF,  p-value: < 2.2e-16
+\end{verbatim}
+\vspace{.5cm} \newpage
+
+\begin{enumerate}\setcounter{enumi}{1}
+	\item Make a scatterplot of the two residuals and add the regression line. 
+\end{enumerate}
+To fullfil this task, I used the ggplot2 package to first create a scatterplot. The code belox creates the plot, inserts a regression line and defines the titles for the axes:
+\begin{Shaded}
+	\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(inc.sub, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ residuals1, }\AttributeTok{y =}\NormalTok{ residuals2)) }\SpecialCharTok{+}
+	\FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{color =} \StringTok{"grey30"}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+}          
+	\FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{color =} \StringTok{"red"}\NormalTok{, }\AttributeTok{fill =} \StringTok{"pink"}\NormalTok{, }\AttributeTok{se =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{+}  
+	\FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Graph 4: Residuals Model 1 vs. Residuals Model 2"}\NormalTok{,}
+	\AttributeTok{x =} \StringTok{"Residuals Model 1"}\NormalTok{,}
+	\AttributeTok{y =} \StringTok{"Residuals Model 2"}\NormalTok{) }\SpecialCharTok{+}
+	\FunctionTok{theme\_minimal}\NormalTok{(}\AttributeTok{base\_size =} \DecValTok{10}\NormalTok{) }\SpecialCharTok{+}
+	\FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{))}
+	\end{Highlighting}
+\end{Shaded}
+
+
+The scatterplot below illustrates the relationship between the residuals from Model 1 and the residuals from Model 2. Consistent with the OLS results from Task 1, the plot shows a positive correlation: larger residuals in the presidential vote model tend to be associated with larger residuals in the incumbent’s vote model. This pattern is highlighted by the upward-sloping regression line, with an intercept effectively equal to zero, indicating no systematic offset between the residuals.
+
+\pandocbounded{\includegraphics[keepaspectratio]{Problem-Set-3-Steenweg_files/figure-latex/unnamed-chunk-13-1.png}}
+\vspace{.5cm}
+
+\begin{enumerate}\setcounter{enumi}{2}		
+	\item Write the prediction equation.
+\end{enumerate}
+
+\noindent The estimated regression equation for the residuals is:
+\[
+\widehat{\text{residuals1}} = -5.934 \times 10^{-18} + 0.2569 \times \text{residuals2}.
+\]
+This equation shows that the residuals from the incumbent’s vote share model (`residuals1`) are positively related to the residuals from the presidential vote model (`residuals2`), with an intercept effectively equal to zero.
+
+
+
+
+
+\section*{Question 5}
+\noindent What if the incumbent's vote share is affected by both the president's popularity and the difference in spending between incumbent and challenger? 
+\begin{enumerate}
+	\item Run a regression where the outcome variable is the incumbent's \texttt{voteshare} and the explanatory variables are \texttt{difflog} and \texttt{presvote}.
+\end{enumerate}
+To fullfil this task, I define a OLS model with difflog and presvote being the explanatory variables and voteshare the outcome variable. The code in the box below specifies this model in R, runs it and gives back a summary of the results:
+\begin{Shaded}
+	\begin{Highlighting}[]
+\NormalTok{multiple\_regression }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(voteshare }\SpecialCharTok{\textasciitilde{}}\NormalTok{ difflog }\SpecialCharTok{+}\NormalTok{ presvote, }\AttributeTok{data =}\NormalTok{ inc.sub)}
+\FunctionTok{summary}\NormalTok{(multiple\_regression)}
+	\end{Highlighting}
+\end{Shaded}
+
+The output below shows the results of this model. The multiple regression results show how both the log difference in campaign spending (difflog) and the presidential vote share of the incumbent’s party (presvote) jointly influence the incumbent’s vote share (voteshare). The intercept of 0.4486 indicates that when difflog = 0 and presvote = 0, the expected incumbent vote share would be about 44.9\%; a theoretical baseline. The coefficient for difflog is 0.0355, meaning that for each one-unit increase in the log spending difference, the incumbent’s vote share increases by roughly 3.6 percentage points, holding presidential vote share constant. The coefficient for presvote is 0.2569, implying that each additional 1 percentage point in the presidential candidate’s vote share is associated with an increase of about 0.26 percentage points in the incumbent’s vote share, holding spending constant. All coefficients are highly statistically significant (p < 0.001). The model explains approximately 45\% of the variation in incumbents’ vote shares (R² = 0.4496), showing that combining campaign spending and presidential vote share provides a substantially better fit than either predictor alone.
+
+\begin{verbatim}
+	## 
+	## Call:
+	## lm(formula = voteshare ~ difflog + presvote, data = inc.sub)
+	## 
+	## Residuals:
+	##      Min       1Q   Median       3Q      Max 
+	## -0.25928 -0.04737 -0.00121  0.04618  0.33126 
+	## 
+	## Coefficients:
+	##              Estimate Std. Error t value Pr(>|t|)    
+	## (Intercept) 0.4486442  0.0063297   70.88   <2e-16 ***
+	## difflog     0.0355431  0.0009455   37.59   <2e-16 ***
+	## presvote    0.2568770  0.0117637   21.84   <2e-16 ***
+	## ---
+	## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+	## 
+	## Residual standard error: 0.07339 on 3190 degrees of freedom
+	## Multiple R-squared:  0.4496, Adjusted R-squared:  0.4493 
+	## F-statistic:  1303 on 2 and 3190 DF,  p-value: < 2.2e-16
+\end{verbatim}
+\vspace{.5cm}
+
+\begin{enumerate}\setcounter{enumi}{1}
+	\item Write the prediction equation.
+\end{enumerate}
+
+\noindent The general multiple regression model can be written as:
+\[
+y_i = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + \varepsilon_i,
+\]
+where $y_i$ is the dependent variable (incumbent's vote share), $x_{1i}$ and $x_{2i}$ are the independent variables (`difflog` and `presvote`), $\beta_0$ is the intercept, $\beta_1$ and $\beta_2$ are the slope coefficients, and $\varepsilon_i$ is the error term.
+
+\noindent For the example at hand, the estimated prediction equation is:
+\[
+\hat{\text{voteshare}}_i = 0.4486 + 0.0355 \times \text{difflog}_i + 0.2569 \times \text{presvote}_i.
+\]
+Again, I omit the error term $\varepsilon_i$ at this point because I'm focusing on the predicted values of the incumbent’s vote share. Including the error term would show the full model, emphasizing that actual outcomes may deviate from these predictions due to unexplained variation.
+
+\vspace{.5cm}
+
+\begin{enumerate}\setcounter{enumi}{2}
+	\item What is it in this output that is identical to the output in Question 4? Why do you think this is the case?
+\end{enumerate}
+In the multiple regression output here in Question 5, the coefficient, standard error, t-value, and p-value for presvote are identical to those obtained in Question 4 when the residuals of the incumbent vote share model were regressed on the residuals of the presidential vote model. This occurs because of the Frisch–Waugh–Lovell theorem, which states that the coefficient of a variable in a multiple regression can be obtained by regressing the residuals of the dependent variable (after removing the effect of other regressors) on the residuals of that independent variable (after removing the effect of the same regressors). In other words, the effect of presvote on voteshare after controlling for difflog is exactly what was estimated earlier using residuals in Question 4, which is why the numerical results are identical.
+
+
+
+\end{document}
