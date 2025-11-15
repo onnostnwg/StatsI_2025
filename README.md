@@ -19,7 +19,6 @@ This is the first course in the quantitative methods sequence, which introduces 
 
 ### TAs
 - [Elena Karagiani](mailto:karagiae@tcd.ie)
-- [Redmond Scales](mailto:RSCALES@tcd.ie)
 
 ## Hardware and Software
 - Computer with Windows/Mac/Linux OS (no Chrome books)-
