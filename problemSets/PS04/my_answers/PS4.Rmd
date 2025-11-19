@@ -1,0 +1,124 @@
+---
+title: "ProblemSet 4"
+author: "Onno Steenweg"
+date: "2025-11-18"
+output: 
+  pdf_document: 
+    latex_engine: xelatex
+    keep_tex: true
+---
+
+1. Setup
+
+To prepare for all subsequent analysis, I need to clear the environment, set the working directory and set up the necessary packages. This is done using the code below: 
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE)
+rm(list=ls())
+setwd("C:/Users/onnos/Documents/GitHub/StatsI_2025/problemSets/PS04/my_answers")
+#install.packages("car")
+library(car)
+library(stargazer)
+data(Prestige)
+#help(Prestige)
+```
+
+Question 1: 
+
+Part a) 
+We can see; we have a factor variable "type" with the levels: wc for white collar, bc for blue collar and prof for professionals. So, I wrote a code that in a new variable saves if somebody is a professional (1) or not (0). here is the code: 
+This also makes sure that where "type" is NA, it stays NA in the new variable. 
+```{r}
+head(Prestige)
+Prestige$professional <- ifelse(Prestige$type == "prof", 1, 0)
+```
+
+Part b)
+So I ran a linear model with the main effects of income and being a professional. In R if you write the formula like this, it includes an interaction effect. See the code below:
+the code also shows us the results of this regression. 
+```{r, results='asis'}
+model1 <- lm(prestige ~ income * professional, data = Prestige)
+stargazer(model1,
+          type = "latex",       
+          title = "Linear Model of Prestige on Income, Professional, and Interaction",
+          label = "tab:prestige_model",
+          digits = 3,
+          single.row = TRUE,
+          float = TRUE,
+          header = FALSE,
+          style = "default") 
+```
+Interpretation: The linear model shows a strong interaction between income and professional status in predicting occupational prestige. For non-professional occupations (blue and white collar), income has a positive effect on prestige: each additional dollar of income increases prestige by about 0.0032 points. Professional occupations, however, begin with much higher baseline prestige; approximately 38 points above non-professionals when income is held at zero. The negative interaction term indicates that the effect of income on prestige is significantly weaker for professionals; their income slope is reduced by 0.0023, leaving a very small remaining effect. This means that while income meaningfully boosts prestige among blue- and white-collar occupations, professional occupations tend to have high prestige regardless of income level. Overall, the model fits well (R² = .79), demonstrating that income, professional status, and their interaction explain a substantial proportion of variability in occupational prestige.
+
+Part c.) 
+\[\widehat{\text{prestige}} = 21.1423 + 0.0031709\,(\text{income}) + 37.7813\,(\text{professional}) - 0.0023257\,(\text{income} \times \text{professional}).\]
+
+
+Part d.) 
+The coefficient for income is 0.00317, which represents the effect of income on prestige for non-professional occupations (because professional = 0). This means that for blue- and white-collar jobs, each additional dollar of income increases the predicted prestige score by 0.00317 points. In other words, higher income is associated with higher occupational prestige among non-professionals.
+
+
+Part e.) 
+The coefficient for professional is 37.78, which represents the difference in prestige between professional and non-professional occupations when income = 0. Holding income at zero, professional occupations are predicted to have prestige scores that are 37.78 points higher than blue- and white-collar occupations. This reflects the large baseline difference in prestige between these occupational groups.
+
+Part f.) 
+\[\text{Model: }\ \widehat{y} = \beta_0 + \beta_1(\text{income}) + \beta_2(\text{professional}) + \beta_3(\text{income}\times\text{professional})\]
+
+\[\text{Marginal effect of income when } \text{professional}=1:\quad\frac{\partial \widehat{y}}{\partial \text{income}}=\beta_1+\beta_3(\text{professional})=\beta_1+\beta_3.\]
+
+\[\text{Substitute the estimates: }\ \beta_1=0.0031709,\quad \beta_3=-0.0023257\]
+
+\[\frac{\partial \widehat{y}}{\partial \text{income}}\Bigg|_{\text{professional}=1}=0.0031709-0.0023257=0.0008452.\]
+
+\[\text{Change in }\widehat{y}\text{ for a \$1,000 increase in income:}\quad 0.0008452\times 1000 = 0.8452.\]
+A \$1,000 increase in income is associated with an increase of approx 0.845 points in the prestige score for professional occupations.
+
+
+Part g.)
+We use the interaction model: \[\hat{y} = \beta_0 + \beta_1(\text{income}) + \beta_2(\text{professional}) + \beta_3(\text{income} \times \text{professional})\]
+
+The marginal effect of changing from a non-professional to a professional occupation at a given income is: \[\frac{\partial \hat{y}}{\partial \text{professional}} = \beta_2 + \beta_3(\text{income})\]
+
+Substitute the estimates and income = 6000: \[\frac{\partial \hat{y}}{\partial \text{professional}} = 37.7813 + (-0.0023257 \times 6000)\]
+
+Calculate the interaction term: \[-0.0023257 \times 6000 = -13.9542\]
+
+Thus, the marginal effect is: \[\frac{\partial \hat{y}}{\partial\text{professional}}\Big|_{\text{income}=6000} = 37.7813 - 13.9542 = 23.8271\]
+
+Interpretation: At an income of \$6,000, switching from a non-professional to a professional occupation is associated with an increase in prestige of approximately 23.83 points.
+
+
+
+Question 2: 
+ First of all: 
+ The regression examines the impact of anti-McAuliffe lawn signs on Ken Cuccinelli’s vote share. The constant of 0.302 indicates that in a precinct that neither received lawn signs nor was adjacent to a treated precinct, Cuccinelli’s expected vote share was 30.2%.
+
+The coefficient for precincts assigned lawn signs is 0.042 (SE = 0.016), meaning that placing lawn signs in a precinct increased Cuccinelli’s vote share by about 4.2 percentage points on average, relative to control precincts. This effect is statistically significant at conventional levels, as the standard error is small relative to the coefficient.
+
+The coefficient for precincts adjacent to a treated precinct is also 0.042 (SE = 0.013), suggesting that neighboring precincts experienced a similar increase in Cuccinelli’s vote share, indicating spillover effects from the signs. In other words, exposure to signs in nearby precincts affected voting behavior even if a precinct itself was not treated.
+
+Overall, the model explains about 9.4% of the variance in Cuccinelli’s vote share (R² = 0.094), reflecting that lawn signs had a measurable but modest impact on voting outcomes.
+
+
+Part a.) 
+To determine whether having lawn signs in a precinct affects vote share, we test the null hypothesis $H_0: \beta_{\text{treatment}} = 0$ against the alternative $H_1: \beta_{\text{treatment}} \neq 0$ at the $\alpha = 0.05$ significance level. The estimated coefficient for precincts assigned lawn signs is $\hat{\beta}_{\text{treatment}} = 0.042$ with a standard error of $0.016$. This yields a $t$-statistic of 
+\[
+t = \frac{\hat{\beta}_{\text{treatment}}}{SE} = \frac{0.042}{0.016} \approx 2.625.
+\] 
+With 128 degrees of freedom ($N - k - 1 = 131 - 2 - 1$), the two-sided critical value at the 5\% significance level is approximately $t_{0.025,128} \approx 1.98$. Since $|t| = 2.625 > 1.98$, we reject the null hypothesis. Therefore, there is statistically significant evidence that placing lawn signs in a precinct increases Ken Cuccinelli's vote share by about 4.2 percentage points.
+
+Part b.)
+To determine whether being adjacent to precincts with lawn signs affects vote share, we test the null hypothesis $H_0: \beta_{\text{adjacent}} = 0$ against the alternative $H_1: \beta_{\text{adjacent}} \neq 0$ at the $\alpha = 0.05$ significance level. The estimated coefficient for adjacent precincts is $\hat{\beta}_{\text{adjacent}} = 0.042$ with a standard error of $0.013$. This yields a $t$-statistic of 
+\[
+t = \frac{\hat{\beta}_{\text{adjacent}}}{SE} = \frac{0.042}{0.013} \approx 3.23.
+\] 
+With 128 degrees of freedom ($N - k - 1 = 131 - 2 - 1$), the two-sided critical value at the 5\% significance level is approximately $t_{0.025,128} \approx 1.98$. Since $|t| = 3.23 > 1.98$, we reject the null hypothesis. Therefore, there is statistically significant evidence that being next to precincts with lawn signs increases Ken Cuccinelli's vote share by about 4.2 percentage points.
+
+
+Part c.) 
+The constant term in the regression, $\beta_0 = 0.302$, represents the expected vote share for Ken Cuccinelli in a precinct that neither received lawn signs nor was adjacent to a treated precinct. Substantively, this means that in the absence of any treatment or spillover effects, Cuccinelli's baseline vote share is approximately 30.2\% in these control precincts. This provides a reference point for interpreting the additional effects of lawn signs and adjacency on vote share.
+
+
+Part d.) 
+The $R^2$ for this regression is 0.094, indicating that the model explains only about 9.4\% of the variation in Cuccinelli's vote share across precincts. While the coefficients for precincts assigned lawn signs and for adjacent precincts are statistically significant and indicate meaningful increases in vote share (approximately 4.2 percentage points each), the low $R^2$ suggests that yard signs account for only a small portion of the overall variation in voting outcomes. Most of the differences in vote share are due to other factors not included in this model, such as demographic characteristics, local issues, or other campaign activities. Thus, while lawn signs do have a measurable effect, they represent only one small part of the broader determinants of electoral outcomes.
+
+

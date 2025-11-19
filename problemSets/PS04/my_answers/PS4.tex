@@ -1,0 +1,469 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={ProblemSet 4},
+  pdfauthor={Onno Steenweg},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Problem Set 4}
+\date{18.11.25; Due: November 27, 2025}
+\author{Onno Steenweg; Applied Stats/Quant Methods 1}
+
+\begin{document}
+\maketitle
+
+\section*{Introduction \& Set-Up}
+To prepare for all subsequent analysis, I need to clear the environment,
+set the working directory and set up the necessary packages. This is
+done using the code below:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{knitr}\SpecialCharTok{::}\NormalTok{opts\_chunk}\SpecialCharTok{$}\FunctionTok{set}\NormalTok{(}\AttributeTok{echo =} \ConstantTok{TRUE}\NormalTok{)}
+\FunctionTok{rm}\NormalTok{(}\AttributeTok{list=}\FunctionTok{ls}\NormalTok{())}
+\FunctionTok{setwd}\NormalTok{(}\StringTok{"C:/Users/onnos/Documents/GitHub/StatsI\_2025/problemSets/PS04/my\_answers"}\NormalTok{)}
+\FunctionTok{library}\NormalTok{(car)}
+\FunctionTok{library}\NormalTok{(stargazer)}
+\FunctionTok{data}\NormalTok{(Prestige)}
+\FunctionTok{help}\NormalTok{(Prestige)}
+\end{Highlighting}
+\end{Shaded}
+
+\section*{Question 1:}
+\noindent We would like to study whether individuals with higher levels of income have more prestigious jobs. Moreover, we would like to study whether professionals have more prestigious jobs than blue and white collar workers.
+
+\begin{enumerate}
+	\item [(\textbf{a})]
+	Create a new variable \texttt{professional} by recoding the variable \texttt{type} so that professionals are coded as $1$, and blue and white collar workers are coded as $0$ (Hint: \texttt{ifelse}).
+\end{enumerate}
+	
+Using the \texttt{head(Prestige)} function, we can view the first rows of the data set. We observe that we have a factor variable \texttt{type} with the levels:
+\texttt{wc} for white collar, \texttt{bc} for blue collar, and \texttt{prof} for professionals.
+
+I wrote code that creates a new variable indicating whether someone is a professional (1) or not (0). The code also ensures that where \texttt{type} is \texttt{NA}, the corresponding value in the new variable remains \texttt{NA}. All codes and outputs can be seen below.
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(Prestige)}
+\NormalTok{Prestige}\SpecialCharTok{$}\NormalTok{professional }\OtherTok{\textless{}{-}} \FunctionTok{ifelse}\NormalTok{(Prestige}\SpecialCharTok{$}\NormalTok{type }\SpecialCharTok{==} \StringTok{"prof"}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+	##                     education income women prestige census type
+	## gov.administrators      13.11  12351 11.16     68.8   1113 prof
+	## general.managers        12.26  25879  4.02     69.1   1130 prof
+	## accountants             12.77   9271 15.70     63.4   1171 prof
+	## purchasing.officers     11.42   8865  9.11     56.8   1175 prof
+	## chemists                14.62   8403 11.68     73.5   2111 prof
+	## physicists              15.64  11030  5.13     77.6   2113 prof
+\end{verbatim}
+
+\newpage 
+
+\begin{enumerate}
+	\item [(\textbf{b})]
+Run a linear model with \texttt{prestige} as an outcome and \texttt{income}, \texttt{professional}, and the interaction of the two as predictors (Note: this is a continuous $\times$ dummy interaction.)
+\end{enumerate}
+
+For this task, I ran a linear OLS model. Specifically, I estimated a linear model with the main effects of income and being a professional. In R, writing the formula in this way automatically includes an interaction effect. See the code below; the code also shows the results of this regression. The code below also builds a \texttt{stargazer} table that presents the regression results.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model1 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(prestige }\SpecialCharTok{\textasciitilde{}}\NormalTok{ income }\SpecialCharTok{*}\NormalTok{ professional, }\AttributeTok{data =}\NormalTok{ Prestige)}
+\FunctionTok{stargazer}\NormalTok{(model1,}
+          \AttributeTok{type =} \StringTok{"latex"}\NormalTok{,       }
+          \AttributeTok{title =} \StringTok{"Linear Model of Prestige on Income, Professional, and Interaction"}\NormalTok{,}
+          \AttributeTok{label =} \StringTok{"tab:prestige\_model"}\NormalTok{,}
+          \AttributeTok{digits =} \DecValTok{3}\NormalTok{,}
+          \AttributeTok{single.row =} \ConstantTok{TRUE}\NormalTok{,}
+          \AttributeTok{float =} \ConstantTok{TRUE}\NormalTok{,}
+          \AttributeTok{header =} \ConstantTok{FALSE}\NormalTok{,}
+          \AttributeTok{style =} \StringTok{"default"}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+The resulting \texttt{stargazer} table looks as follows:
+
+\begin{table}[!htbp] \centering 
+  \caption{Linear Model of Prestige on Income, Professional, and Interaction} 
+  \label{tab:prestige_model} 
+\begin{tabular}{@{\extracolsep{5pt}}lc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{1}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-2} 
+\\[-1.8ex] & prestige \\ 
+\hline \\[-1.8ex] 
+ income & 0.003$^{***}$ (0.0005) \\ 
+  professional & 37.781$^{***}$ (4.248) \\ 
+  income:professional & $-$0.002$^{***}$ (0.001) \\ 
+  Constant & 21.142$^{***}$ (2.804) \\ 
+ \hline \\[-1.8ex] 
+Observations & 98 \\ 
+R$^{2}$ & 0.787 \\ 
+Adjusted R$^{2}$ & 0.780 \\ 
+Residual Std. Error & 8.012 (df = 94) \\ 
+F Statistic & 115.878$^{***}$ (df = 3; 94) \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{1}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
+\end{table}
+
+Interpretation: The linear model shows a strong interaction between
+income and professional status in predicting occupational prestige. For
+non-professional occupations (blue and white collar), income has a
+positive effect on prestige: each additional dollar of income increases
+prestige by about 0.0032 points. Professional occupations, however,
+begin with much higher baseline prestige; approximately 38 points above
+non-professionals when income is held at zero. The negative interaction
+term indicates that the effect of income on prestige is significantly
+weaker for professionals; their income slope is reduced by 0.0023,
+leaving a very small remaining effect. This means that while income
+meaningfully boosts prestige among blue- and white-collar occupations,
+professional occupations tend to have high prestige regardless of income
+level. Overall, the model fits well (R² = .79), demonstrating that
+income, professional status, and their interaction explain a substantial
+proportion of variability in occupational prestige.
+
+\newpage
+
+\begin{enumerate}
+	\item [(c)]
+Write the prediction equation based on the result.
+\end{enumerate}
+
+The model includes the main effects of \texttt{income} and \texttt{professional}, as well as their interaction term (\texttt{income} $\times$ \texttt{professional}) to capture whether the effect of income on prestige differs depending on professional status.
+
+Overall, our model can be written as:
+\[
+\widehat{\text{prestige}} = \beta_0 + \beta_1\,(\text{income}) + \beta_2\,(\text{professional}) + \beta_3\,(\text{income} \times \text{professional})
+\]
+
+From the results of the regression in task b), the estimated prediction equation is:
+\[
+\widehat{\text{prestige}} = 21.1423 + 0.0031709\,(\text{income}) + 37.7813\,(\text{professional}) - 0.0023257\,(\text{income} \times \text{professional})
+\]
+
+
+\vspace{.0cm}
+
+\begin{enumerate}
+	\item [(d)]
+Interpret the coefficient for \texttt{income}.
+\end{enumerate}
+The coefficient for income is 0.00317, which represents the
+effect of income on prestige for non-professional occupations (because
+professional = 0). This means that for blue- and white-collar jobs, each
+additional dollar of income increases the predicted prestige score by
+0.00317 points. In other words, higher income is associated with higher
+occupational prestige among non-professionals.
+
+\vspace{.35cm}
+	
+\begin{enumerate}
+	
+	\item [(e)]
+Interpret the coefficient for \texttt{professional}.
+\end{enumerate}
+
+The coefficient for professional is 37.78, which represents the
+difference in prestige between professional and non-professional
+occupations when income = 0. Holding income at zero, professional
+occupations are predicted to have prestige scores that are 37.78 points
+higher than blue- and white-collar occupations. This reflects the large
+baseline difference in prestige between these occupational groups.
+
+\vspace{.35cm}
+
+\begin{enumerate}
+	
+	\item [(f)]
+What is the effect of a \$1,000 increase in income on prestige score for professional occupations? In other words, we are interested in the marginal effect of income when the variable \texttt{professional} takes the value of $1$. Calculate the change in $\hat{y}$ associated with a \$1,000 increase in income based on your answer for (c).
+\end{enumerate}
+
+To remember, our general model looked like this: 
+\[ \widehat{y}(\text{prestige)} = \beta_0 + \beta_1(\text{income}) + \beta_2(\text{professional}) + \beta_3(\text{income}\times\text{professional})\]
+
+The predicted prestige for professional occupations based on the regression model earlier (task c) is:  
+\[
+\widehat{\text{prestige}} = 21.1423 + 0.0031709\,(\text{income}) + 37.7813\,(\text{professional}) - 0.0023257\,(\text{income} \times \text{professional})
+\]
+
+Since \texttt{professional} is kept constant at level = 1, we combine the coefficients for income:  
+\[
+0.0031709 - 0.0023257 = 0.0008452
+\]
+
+This shows that according to the model, the prestige of preofessionals increases about 0.0008452 points for every dollar that they earn more. For a \$1,000 increase in income, the change in prestige is thus:  
+\[
+0.0008452 \times 1000 = 0.8452
+\]
+
+Overall, this shows that a \$1,000 increase in income is associated with an increase of approx
+0.845 points in the prestige score for professional occupations.
+
+\newpage 
+
+\begin{enumerate}
+	
+	\item [(g)]
+What is the effect of changing one's occupations from non-professional to professional when her income is \$6,000? We are interested in the marginal effect of professional jobs when the variable \texttt{income} takes the value of $6,000$. Calculate the change in $\hat{y}$ based on your answer for (c).
+\end{enumerate}
+
+Again, the base for this analysis is the interaction model that was established before:
+\[\widehat{y} = \beta_0 + \beta_1\,(\text{income}) + \beta_2\,(\text{professional}) + \beta_3\,(\text{income} \times \text{professional})\]
+
+Since there is now a change in \texttt{professional} from 0 to 1 at \texttt{income} = 6000, the total effect can be determined as follows:
+
+\[
+\beta_2 + \beta_3 \times (\text{income}) = 37.7813 + (-0.0023257 \times 6000)
+\]
+
+Next, this is the calculation for the interaction term:  
+\[
+-0.0023257 \times 6000 = -13.9542
+\]
+
+We can now add in the coefficients:  
+\[
+37.7813 - 13.9542 = 23.8271
+\]
+
+\noindent
+Interpretation: For someone earning \$6,000, moving from a non-professional to a professional occupation is associated with an increase in prestige of about 23.83 points. In other words, at this income level, being a professional substantially raises the predicted prestige score compared to a non-professional.
+
+
+\section*{Question 2:} 
+\noindent 	Researchers are interested in learning the effect of all of those yard signs on voting preferences.\footnote{Donald P. Green, Jonathan	S. Krasno, Alexander Coppock, Benjamin D. Farrer,	Brandon Lenoir, Joshua N. Zingher. 2016. ``The effects of lawn signs on vote outcomes: Results from four randomized field experiments.'' Electoral Studies 41: 143-150. } Working with a campaign in Fairfax County, Virginia, 131 precincts were randomly divided into a treatment and control group. In 30 precincts, signs were posted around the precinct that read, ``For Sale: Terry McAuliffe. Don't Sellout Virgina on November 5.'' \\
+
+Below is the result of a regression with two variables and a constant.  The dependent variable is the proportion of the vote that went to McAuliff's opponent Ken Cuccinelli. The first variable indicates whether a precinct was randomly assigned to have the sign against McAuliffe posted. The second variable indicates
+a precinct that was adjacent to a precinct in the treatment group (since people in those precincts might be exposed to the signs).
+
+\begin{table}[!htbp]
+	\centering 
+	\textbf{Impact of lawn signs on vote share}\\
+	\begin{tabular}{@{\extracolsep{5pt}}lccc} 
+		\\[-1.8ex] 
+		\hline \\[-1.8ex]
+		Precinct assigned lawn signs  (n=30)  & 0.042\\
+		& (0.016) \\
+		Precinct adjacent to lawn signs (n=76) & 0.042 \\
+		&  (0.013) \\
+		Constant  & 0.302\\
+		& (0.011)
+		\\
+		\hline \\
+	\end{tabular}\\
+	\footnotesize{\textit{Notes:} $R^2$=0.094, N=131}
+\end{table}
+
+\newpage
+
+Before starting the tasks, I interpreted the regression results presented in the task: The regression examines the impact of
+anti-McAuliffe lawn signs on Ken Cuccinelli's vote share. The constant
+of 0.302 indicates that in a precinct that neither received lawn signs
+nor was adjacent to a treated precinct, Cuccinelli's expected vote share
+was 30.2\%.
+
+The coefficient for precincts assigned lawn signs is 0.042 (SE = 0.016),
+meaning that placing lawn signs in a precinct increased Cuccinelli's
+vote share by about 4.2 percentage points on average, relative to
+control precincts. This effect is statistically significant at
+conventional levels, as the standard error is small relative to the
+coefficient.
+
+The coefficient for precincts adjacent to a treated precinct is also
+0.042 (SE = 0.013), suggesting that neighboring precincts experienced a
+similar increase in Cuccinelli's vote share, indicating spillover
+effects from the signs. In other words, exposure to signs in nearby
+precincts affected voting behavior even if a precinct itself was not
+treated.
+
+Overall, the model explains about 9.4\% of the variance in Cuccinelli's
+vote share (R² = 0.094), reflecting that lawn signs had a measurable but
+modest impact on voting outcomes.
+
+\vspace{.35cm}
+
+\begin{enumerate}
+	\item [(a)]
+ Use the results from a linear regression to determine whether having these yard signs in a precinct affects vote share (e.g., conduct a hypothesis test with $\alpha = .05$). 
+\end{enumerate}
+To determine whether having lawn signs in a precinct affects
+vote share, we test the null hypothesis
+\(H_0: \beta_{\text{treatment}} = 0\) against the alternative
+\(H_1: \beta_{\text{treatment}} \neq 0\) at the \(\alpha = 0.05\)
+significance level. The estimated coefficient for precincts assigned
+lawn signs is \(\hat{\beta}_{\text{treatment}} = 0.042\) with a standard
+error of \(0.016\). This yields a \(t\)-statistic of \[
+t = \frac{\hat{\beta}_{\text{treatment}}}{SE} = \frac{0.042}{0.016} \approx 2.625.
+\] With 128 degrees of freedom (\(N - k - 1 = 131 - 2 - 1\)), the
+two-sided critical value at the 5\% significance level is approximately
+\(t_{0.025,128} \approx 1.98\). Since \(|t| = 2.625 > 1.98\), we reject
+the null hypothesis. Therefore, there is statistically significant
+evidence that placing lawn signs in a precinct increases Ken
+Cuccinelli's vote share by about 4.2 percentage points.
+
+\vspace{.35cm}
+
+\begin{enumerate}
+	\item [(b)]
+Use the results to determine whether being
+next to precincts with these yard signs affects vote
+share (e.g., conduct a hypothesis test with $\alpha = .05$).
+\end{enumerate}
+
+To determine whether being adjacent to precincts with lawn
+signs affects vote share, we test the null hypothesis
+\(H_0: \beta_{\text{adjacent}} = 0\) against the alternative
+\(H_1: \beta_{\text{adjacent}} \neq 0\) at the \(\alpha = 0.05\)
+significance level. The estimated coefficient for adjacent precincts is
+\(\hat{\beta}_{\text{adjacent}} = 0.042\) with a standard error of
+\(0.013\). This yields a \(t\)-statistic of \[
+t = \frac{\hat{\beta}_{\text{adjacent}}}{SE} = \frac{0.042}{0.013} \approx 3.23.
+\] With 128 degrees of freedom (\(N - k - 1 = 131 - 2 - 1\)), the
+two-sided critical value at the 5\% significance level is approximately
+\(t_{0.025,128} \approx 1.98\). Since \(|t| = 3.23 > 1.98\), we reject
+the null hypothesis. Therefore, there is statistically significant
+evidence that being next to precincts with lawn signs increases Ken
+Cuccinelli's vote share by about 4.2 percentage points.
+
+\vspace{.35cm}
+
+\begin{enumerate}
+	\item [(c)]
+Interpret the coefficient for the constant term substantively.
+\end{enumerate}
+
+The constant term in the regression, \(\beta_0 = 0.302\),
+represents the expected vote share for Ken Cuccinelli in a precinct that
+neither received lawn signs nor was adjacent to a treated precinct.
+Substantively, this means that in the absence of any treatment or
+spillover effects, Cuccinelli's baseline vote share is approximately
+30.2\% in these control precincts. This provides a reference point for
+interpreting the additional effects of lawn signs and adjacency on vote
+share.
+
+\vspace{.35cm}
+
+\begin{enumerate}
+	\item [(d)]
+Evaluate the model fit for this regression.  What does this	tell us about the importance of yard signs versus other factors that are not modeled?
+\end{enumerate}
+
+The \(R^2\) for this regression is 0.094, indicating that the
+model explains only about 9.4\% of the variation in Cuccinelli's vote
+share across precincts. While the coefficients for precincts assigned
+lawn signs and for adjacent precincts are statistically significant and
+indicate meaningful increases in vote share (approximately 4.2
+percentage points each), the low \(R^2\) suggests that yard signs
+account for only a small portion of the overall variation in voting
+outcomes. Most of the differences in vote share are due to other factors
+not included in this model, such as demographic characteristics, local
+issues, or other campaign activities. Thus, while lawn signs do have a
+measurable effect, they represent only one small part of the broader
+determinants of electoral outcomes.
+
+\end{document}
